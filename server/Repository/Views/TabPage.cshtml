@@ -1,0 +1,30 @@
+@using Seal.Model
+@using Seal.Helpers
+@{
+    Report report = Model;
+    ReportView view = report.CurrentView;
+    Repository repository = report.Repository;
+}
+
+<div id="@(view.IdSuffix)_tab_page" style="" class="@(report.PrintLayout ? "" : "tab-pane fade")">
+    @if (view.HasValue("tab_description"))
+    {
+        <div class="alert alert-info">
+            @Raw(view.GetHtmlValue("tab_description"))
+        </div>
+    }
+
+    @if (report.IsExecuting && !report.Cancel)
+    {
+        foreach (ReportView childView in view.Views.OrderBy(i => i.SortOrderFull))
+        {
+            @Raw(childView.Parse())
+            if (!string.IsNullOrEmpty(childView.Error))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @Raw(Helper.ToHtml(childView.Error))
+                </div>
+            }
+        }
+    }
+</div> <!--_tab_page-->

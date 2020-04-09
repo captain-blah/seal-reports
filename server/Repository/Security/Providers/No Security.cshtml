@@ -1,0 +1,11 @@
+﻿@using Seal.Model;
+@{
+    SecurityProvider provider = Model;
+
+    provider.Script = @"@{
+    SecurityUser user = Model;
+	//No security: use the default security group
+    user.Name = """";
+	user.AddDefaultSecurityGroup();
+}";    
+}

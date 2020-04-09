@@ -1,0 +1,18 @@
+version: '3.5'
+
+services: 
+    sealreport:
+        container_name: sealreport
+        build: .
+        # tty: true
+        # stdin_open: true
+        ports: 
+            - 8000:80
+            - 8001:443
+        environment: 
+            - ASPNETCORE_URLS=https://+;http://+
+            - ASPNETCORE_HTTPS_PORT=8001 
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=crypticpassword
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx 
+        volumes:
+            - ${HOME}/.aspnet/https:/https/

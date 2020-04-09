@@ -1,0 +1,36 @@
+@using Seal.Model;
+@{
+    ReportViewTemplate Template = Model;
+
+    //Template Name
+    Template.Name = ReportViewTemplate.ReportName; //"Report"; for load perf.
+    Template.Description = "Root view containing all the code necessary for the report execution.";
+
+    //If true, the view can be configured for a report model
+    Template.ForReportModel = false;
+
+    //Parameters for this template
+    Template.Parameters.Add(new Parameter() { Name = Parameter.ReportFormatParameter, Value = "html", Enums = new string[] { "html|HTML", "print|HTML Print", "csv|CSV Excel", "pdf|PDF", "excel|Excel", "custom|Custom" }, DisplayName = "Report format", Description = "Format of the report result. If format is Custom, Report.ResultFilePath must be specified in a child script template." });
+    Template.Parameters.Add(new Parameter() { Name = "report_description", DisplayName = "Report description", Description = "Optional report description displayed in the information panel." });
+    Template.Parameters.Add(new Parameter() { Name = "restriction_button", DisplayName = "Display: Show restrictions", BoolValue = true, Description = "If true, the restrictions are displayed when the report is initialized (if the report has prompted restrictions)." });
+    Template.Parameters.Add(new Parameter() { Name = "information_button", DisplayName = "Display: Show information", BoolValue = false, Description = "If true, the report shows the information first when the report is initialized." });
+    Template.Parameters.Add(new Parameter() { Name = "messages_mode", DisplayName = "Display: Execution messages", Description = "Defines if the execution messages panel is enabled and if messages are shown first when the report is initialized.", Value = "enabled", Enums = new string[] { "enabled|Messages enabled", "enabledshown|Messages enabled and shown", "enabledshownexec|Messages enabled and shown only during execution", "disabled|Messages disabled" } });
+    Template.Parameters.Add(new Parameter() { Name = Parameter.AutoScrollParameter, DisplayName = "Display: Autoscroll enabled for execution messages", BoolValue = true, Description = "If true, the top of the messages is always displayed."});
+    Template.Parameters.Add(new Parameter() { Name = "converter_button", DisplayName = "Display: Enable converter menus", BoolValue = true, Description = "If true, the PDF and Excel converter menus are displayed." });
+    Template.Parameters.Add(new Parameter() { Name = "restrictions_per_row", DisplayName = "Display: Restrictions per row", NumericValue = 4, Description = "Defines the number of prompted restrictions to be displayed per row (between 1 and 12)." });
+    Template.Parameters.Add(new Parameter() { Name = Parameter.DrillEnabledParameter, DisplayName = "Navigation: Drill Enabled", BoolValue = true, Description = "If true, the Drill navigation is enabled." });
+    Template.Parameters.Add(new Parameter() { Name = Parameter.DrillAllParameter, DisplayName = "Navigation: Drill all elements of the hierarchy", BoolValue = true, Description = "If true, the Drill navigation is applied to all elements involved in the hierarchy (e.g. 'Day' is replaced by 'Month' and 'Month' by 'Year' in the same model). If several parents or children can be chosen, the one with the smallest display order is taken." });
+    Template.Parameters.Add(new Parameter() { Name = Parameter.SubReportsEnabledParameter, DisplayName = "Navigation: Sub-Reports Enabled", BoolValue = true, Description = "If true, the Sub-Reports navigation is enabled." });
+    Template.Parameters.Add(new Parameter() { Name = "force_execution", DisplayName = "Options: Force execution", BoolValue = false, Description = "If true, force the report to be executed directly the first time even if some restrictions are prompted." });
+    Template.Parameters.Add(new Parameter() { Name = Parameter.ServerPaginationParameter, DisplayName = "Options: Server Pagination Enabled", BoolValue = true, Description = "If true, data used by HTML data tables pagination are stored on the server." });
+    Template.Parameters.Add(new Parameter() { Name = "refresh_rate", DisplayName = "Options: Auto-Refresh (seconds)", NumericValue = 0, Description = "Value in seconds to re-execute automatically the report. 0 means no refresh." });
+    Template.Parameters.Add(new Parameter() { Name = Parameter.ForceModelsLoad, DisplayName = "Options: Load all Models", BoolValue = false, Description = "If true, all models defined in the report will be loaded and processed during execution. By default, false means to load only models belonging to the Views being parsed." });
+    Template.Parameters.Add(new Parameter() { Name = "additional_js", DisplayName = "Additional JavaScript", Description = "Additional JavaScript inserted at the top of the report result file." });
+    Template.Parameters.Add(new Parameter() { Name = "additional_css", DisplayName = "Additional CSS", Description = "Additional CSS inserted at the top of the report result file (after the CSS includes).", Enums = new string[] { "body {font-size: 12px;}", ".dataTable {font-size: 10px;}" }, UseOnlyEnumValues = false });
+    Template.Parameters.Add(new Parameter() { Name = "container_fluid", BoolValue = true, DisplayName = "Bootstrap: Containers are fluid", Description = "If true, the bootstrap containers have a full width, spanning the entire width of the viewport, otherwise the containers have a responsive fixed width." });
+    Template.Parameters.Add(new Parameter() { Name = Parameter.CSVUtf8Parameter, BoolValue = false, DisplayName = "CSV: Encode file in UTF8", Description = "If true, the file generated for a CSV export is encoded in UTF8, otherwise the file encoding is the Default of the machine executing the report." });
+    Template.Parameters.Add(new Parameter() { Name = "pdf_toc", BoolValue = true, DisplayName = "PDF: Generate Table of Contents", Description = "If true, the Table of Contents is enabled and inserted for the PDF conversion, it applies to the Tab Pages (level 1) and Model Pages (level 2)." });
+
+    //Allowed template parent names
+    Template.ParentNames = new List<string>();
+}
